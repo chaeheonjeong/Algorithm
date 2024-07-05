@@ -69,12 +69,4 @@ class Solution {
             dfs(target, depth + 1, i + 1, s + all.substring(i, i + 1));
         }
     }
-
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-        String[] orders = {"ABC", "ACD", "ADE", "BCE"};
-        int[] course = {2, 3};
-        String[] result = sol.solution(orders, course);
-        System.out.println(Arrays.toString(result));
-    }
 }
