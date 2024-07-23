@@ -5,50 +5,40 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 
-class Time implements Comparable<Time> {
-    int start;
-    int finish;
-
-    public Time(int start, int finish){
-        this.start = start;
-        this.finish = finish;
-    }
-
-    @Override
-    public int compareTo(Time other){
-        int finishComparison = Integer.compare(this.finish, other.finish);
-        if(finishComparison == 0){
-            return Integer.compare(this.start, other.start);
+public class Main{
+    static class MeetingComparator implements Comparator<int[]>{
+        @Override
+        public int compare(int[] a, int[] b){
+            if(a[1] == b[1]){
+                return a[0] - b[0];
+            }
+            return a[1] - b[1];
         }
-
-        return finishComparison;
     }
-}
 
-public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        Time[] meetingRoom = new Time[n];
+        StringTokenizer st  = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int[][] meeting = new int[n][2];
 
         for(int i=0; i<n; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int finish = Integer.parseInt(st.nextToken());
-
-            meetingRoom[i] = new Time(start, finish);
+            st = new StringTokenizer(br.readLine());
+            meeting[i][0] = Integer.parseInt(st.nextToken());
+            meeting[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(meetingRoom);
-        int target = meetingRoom[0].finish;
-        int answer = 1;
-        for(int i=1; i<n; i++){
-            if(target <= meetingRoom[i].start){
-                answer++;
-                target = meetingRoom[i].finish;
+        Arrays.sort(meeting, new MeetingComparator());
+
+        int count = 0;
+        int end = -1;
+        for(int i=0; i<n; i++){
+            if(meeting[i][0] >= end){
+                end = meeting[i][1];
+                count++;
             }
         }
 
-        System.out.println(answer);
+        System.out.println(count);
     }
 }
