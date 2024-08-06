@@ -25,7 +25,7 @@ public class Main {
             }
         }
 
-        for(int i=1; i<n; i++){
+        for(int i=1; i<=n/2; i++){
             combinationNumber = i;
             count(0, 0);
         }
