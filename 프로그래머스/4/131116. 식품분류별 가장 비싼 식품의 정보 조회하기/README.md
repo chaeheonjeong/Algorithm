@@ -1,6 +1,6 @@
 # [level 4] 식품분류별 가장 비싼 식품의 정보 조회하기 - 131116 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131116) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131116#qna) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@ Empty
 
 ### 제출 일자
 
-2024년 07월 04일 20:55:31
+2024년 10월 12일 09:40:03
 
 ### 문제 설명
 
