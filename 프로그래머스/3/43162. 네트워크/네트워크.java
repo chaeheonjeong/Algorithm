@@ -38,9 +38,10 @@ class Solution {
     }
     
     public static void dfs(int now){
+        visited[now] = true;
+        
         for(int x: list[now]){
             if(!visited[x]){
-                visited[x] = true;
                 dfs(x);
             }
         }
