@@ -2,10 +2,10 @@ const fs = require('fs');
 const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const n = parseInt(input[0]);
-let dist = input[1].split(' ').map(Number);
-let price = input[2].split(' ').map(Number);
+let dist = input[1].split(' ').map(BigInt);
+let price = input[2].split(' ').map(BigInt);
 
-let result = 0;
+let result = 0n;
 
 let lt = 0, rt = 0;
 function sum(start, end){
@@ -27,4 +27,4 @@ if(lt !== n-1){
     sum(lt, n-1);
 }
 
-console.log(result);
+console.log(String(result));
