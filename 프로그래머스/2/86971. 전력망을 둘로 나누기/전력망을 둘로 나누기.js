@@ -2,7 +2,6 @@ let visited = [];
 let tree = [];
 let N = 0;
 let answer = Number.MAX_SAFE_INTEGER;
-let cnt = 0;
 
 function dfs(now){
     visited[now] = true;
