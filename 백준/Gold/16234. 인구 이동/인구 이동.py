@@ -4,6 +4,7 @@ N, L, R = map(int, input().split())
 
 board = [list(map(int, input().split())) for _ in range(N)]
 visited = [[0]*N for _ in range(N)]
+sumArr = [0] * (N*N+1)
 
 dy = [-1, 0, +1, 0]
 dx = [0, +1, 0, -1]
@@ -16,7 +17,9 @@ def bfs(y, x, seq):
 
     que = deque()
     que.append([y, x, board[y][x]])
-    # visited[y][x] = seq
+    visited[y][x] = seq
+    sum += board[y][x]
+    cnt += 1
     
     while que:
         nowY, nowX, nowV = que.popleft()
@@ -39,17 +42,18 @@ def bfs(y, x, seq):
     return flag
 
 
-def move(target, seq):
+def move():
     for y in range(N):
         for x in range(N):
-            if visited[y][x] == seq:
-                board[y][x] = target
+            if visited[y][x] > 0:
+                board[y][x] = sumArr[visited[y][x]]
 
 answer = 0
 while True:
     seq = 0
     visited = [[0] * N for _ in range(N)]
     flag = True
+    sumArr = [0] * (N*N+1)
 
     for y in range(N):
         for x in range(N):
@@ -61,9 +65,9 @@ while True:
             seq += 1
             if not bfs(y, x, seq):
                 flag = False
+            sumArr[seq] = sum // cnt
 
-            if not sum == 0 or not cnt == 0:
-                move(sum // cnt, seq)
+    move()
 
     if not flag:
         answer += 1
