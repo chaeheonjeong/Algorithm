@@ -1,58 +1,54 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
 
-        List<int[]>[] bus = new ArrayList[n+1];
-
-        for(int i=1; i<n+1; i++){
-            bus[i] = new ArrayList<>();
+        List<int[]>[] graph = new ArrayList[N+1];
+        for (int i=0; i<=N; i++){
+            graph[i] = new ArrayList<>();
         }
 
-        StringTokenizer st;
-        for(int i=0; i<m; i++){
+        for (int i=0; i<M; i++){
             st = new StringTokenizer(br.readLine());
-
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
 
-            bus[a].add(new int[] {b, v});
+            graph[a].add(new int[]{b, v});
         }
 
-        st  = new StringTokenizer(br.readLine());
+        int[] dist = new int[N+1];
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int arrive = Integer.parseInt(st.nextToken());
 
-        int[] result = new int[n+1];
-        Arrays.fill(result, Integer.MAX_VALUE);
-
-        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
-
-        pq.add(new int[] {start, 0});
+        dist[start] = 0;
+        pq.add(new int[]{start, 0});
 
         while(!pq.isEmpty()){
             int[] now = pq.poll();
             int node = now[0];
-            int dist = now[1];
+            int distance = now[1];
 
-            if(dist > result[node]) continue;
+            if(dist[node] < distance) continue;
 
-            for(int[] x: bus[node]){
-                if(dist + x[1] < result[x[0]]){
-                    pq.add(new int[] {x[0], dist + x[1]});
-                    result[x[0]] = dist + x[1];
+            for(int[] x: graph[node]){
+                if (distance + x[1] < dist[x[0]]){
+                    dist[x[0]] = distance + x[1];
+                    pq.add(new int[] {x[0], distance + x[1]});
                 }
             }
         }
 
-        System.out.println(result[arrive]);
+        System.out.println(dist[arrive]);
     }
 }
