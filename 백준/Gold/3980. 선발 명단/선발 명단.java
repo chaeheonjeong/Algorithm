@@ -1,46 +1,46 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    static int[][] position;
-    static boolean[] visited;
-    static int max;
+    static int[][] map;
+    static boolean[] result;
+    static int N = 11;
+    static int answer;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st;
 
-        int testcase = Integer.parseInt(st.nextToken());
-        for(int t=0; t<testcase; t++){
-            position = new int[11][11];
-            visited = new boolean[11];
-            max = Integer.MIN_VALUE;
-
-            for(int y=0; y<11; y++){
+        int T = Integer.parseInt(br.readLine());
+        for (int t=0; t<T; t++){
+            map = new int[N][N];
+            for (int y=0; y<N; y++){
                 st = new StringTokenizer(br.readLine());
-                for(int x=0; x<11; x++){
-                    position[y][x] = Integer.parseInt(st.nextToken());
+                for(int x=0; x<N; x++){
+                    map[y][x] = Integer.parseInt(st.nextToken());
                 }
             }
 
-            dfs(0, 0, 0);
-            System.out.println(max);
+            result = new boolean[N];
+            Arrays.fill(result, false);
+            answer = Integer.MIN_VALUE;
+
+            dfs(0, 0);
+
+            System.out.println(answer);
         }
     }
 
-    public static void dfs(int depth, int ability, int x){
-        if(depth == 11){
-            max = Math.max(max, ability);
-            return;
+    static void dfs(int depth, int sum){
+        if (depth == N){
+            answer = Math.max(answer, sum);
         }
 
-        for(int y=0; y<11; y++){
-            if(!visited[y] && position[y][x] != 0){
-                visited[y] = true;
-                dfs(depth+1, ability + position[y][x], x+1);
-                visited[y] = false;
+        for (int i=0; i<N; i++){
+            if (!result[i] && map[depth][i] != 0){
+                result[i] = true;
+                dfs(depth+1, sum + map[depth][i]);
+                result[i] = false;
             }
         }
     }
