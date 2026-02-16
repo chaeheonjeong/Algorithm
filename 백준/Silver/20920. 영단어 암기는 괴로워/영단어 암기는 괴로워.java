@@ -1,42 +1,36 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        Map<String, Integer> map = new HashMap<>();
-        for(int i=0; i<n; i++){
+        Map<String, Integer> words = new HashMap<>();
+        for(int i=0; i<N; i++){
             String s = br.readLine();
-            if(s.length() < m) continue;
-
-            map.put(s, map.getOrDefault(s, 0)+1);
+            if (s.length() >= M){
+                words.put(s, words.getOrDefault(s, 0) + 1);
+            }
         }
 
-        List<String> words = new ArrayList<>(map.keySet());
-
-        words.sort((w1, w2) -> {
-            int freq1 = map.get(w1);
-            int freq2 = map.get(w2);
-
-            if(freq1 != freq2){
-                return freq2 - freq1;
-            } else if(w1.length() != w2.length()){
-                return w2.length() - w1.length();
-            } else{
-                return w1.compareTo(w2);
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(words.entrySet());
+        Collections.sort(list, (a, b) -> {
+            if (a.getValue() == b.getValue()){
+                if (b.getKey().length() == a.getKey().length()){
+                    return a.getKey().compareTo(b.getKey());
+                }
+                return b.getKey().length() - a.getKey().length();
             }
+            return b.getValue() - a.getValue();
         });
 
         StringBuilder sb = new StringBuilder();
-        for(String s: words){
-            sb.append(s).append('\n');
+        for (Map.Entry<String, Integer> x: list){
+            sb.append(x.getKey()).append('\n');
         }
 
         System.out.println(sb);
